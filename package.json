@@ -1,0 +1,23 @@
+{
+  "name": "cy-report-setup-helper",
+  "version": "1.0.0",
+  "description": "Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished reports are public for them to go back and view statically. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GettinDatFoShow/cy-report-tree-generator.git"
+  },
+  "keywords": [
+    "cypress",
+    "mochawesome"
+  ],
+  "author": "Robert Morris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GettinDatFoShow/cy-report-tree-generator/issues"
+  },
+  "homepage": "https://github.com/GettinDatFoShow/cy-report-tree-generator#readme"
+}
