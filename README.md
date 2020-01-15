@@ -3,19 +3,18 @@
 Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished reports are public for them to go back and view statically. 
 
 # Installation
-`npm install cy-report-setup-helper --save-dev`
+`npm i cy-report-setup-helper --save-dev`
 
-Then...
-`node cy-report-tree-generator.js`
-`npm install`
+Then in the command line run..
+
+`node cy-report-tree-generator.js && npm i`
 
 This should...
 - add the needed devDependencies npm packages for mocha, mochawesome, mochawesome-report-generator, npm-run-all, and directory-tree.
 - set up the scripts needed for mocha report generation and placement
-- add the cypress settings for the mocha reporter and output video/screenshot folders.
+- add the cypress settings for the mocha reporter and output videos/screenshots folders.
 
-Then... 
-just add the script `test:create-reports` to your build script or test run by calling `npm run test:create-reports`. 
+Then add the script `test:create-reports` to your build script or test run by calling `npm run test:create-reports`. 
 
 # Extra Info
 by default the `test:create-reports` script assumes that a `start` script exists and is set up for a live developement server which will run the UI code. This can be changed to fit your needs by altering the `test:cy` script in your package.json.
