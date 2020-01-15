@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs');
 
 const CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
