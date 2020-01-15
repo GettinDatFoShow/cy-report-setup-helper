@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
 const PROJECT_PACKAGE_FILE = fs.readFileSync('package.json', 'utf-8');
-const CY_REPORT_TREE_GENERATOR = fs.readFileSync('./cy-report-tree-generator.js', 'utf-8');
+const CY_REPORT_TREE_GENERATOR = fs.readFileSync('node_modules/cy-report-setup-helper/cy-report-tree-generator.js', 'utf-8');
 
 let cypressSettings = JSON.parse(CYPRESS_FILE);
 let projectSettings = JSON.parse(PROJECT_PACKAGE_FILE);
@@ -25,6 +25,7 @@ addProjectProperty(projectSettings, 'scripts', 'cleanup:evidence', 'rm -fr integ
 addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=integration/reports/mocha > integration/public/report.json');
 addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge integration/public/report.json -f report -o integration/public/');
 addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start cy:run');
+addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
 addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cleanup:all test:cy merge_reports generate_html_report create-tree');
 addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node integration/d-tree-listing.js');
 
