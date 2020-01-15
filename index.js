@@ -10,6 +10,10 @@ let projectSettings = JSON.parse(PROJECT_PACKAGE_FILE);
 const APP_NAME = projectSettings.name;
 /** function to add aditional properties */
 const addProjectProperty = (settingsFile, projectProperty, newProperty, instructions) => {
+    if (settingsFile[projectProperty] === undefined) {
+        settingsFile[projectProperty] = { };
+    }
+    console.log(settingsFile)
     settingsFile[projectProperty][newProperty] = instructions;
 }
 
@@ -40,23 +44,22 @@ addProjectProperty(cypressSettings, 'reporterOptions', 'json', true);
 cypressSettings['videosFolder'] = 'integration/public/videos';
 cypressSettings['screenshotsFolder'] = 'integration/public/screenshots';
 cypressSettings['videoCompression'] = false;
-cypressSettings['reporterOptions'] = 'mochawesome';
+cypressSettings['reporter'] = 'mochawesome';
 
 const integrationFolder = 'integration/';
-const publicDirectoryPath = `${integrationFolder}public`;
-const nginxPath = `${integrationFolder}/nginx`;
-const nginxConfPath = `${nginxPath}/conf`;
-const nginxIncludesPath = `${nginxConfPath}/includes`;
-const videosPath = `${publicDirectoryPath}/videos`;
-const screenshotsPath = `${publicDirectoryPath}/screenshots`;
+const publicDirectoryPath = `integration/public/`;
+const nginxPath = `integration/nginx/`;
+const nginxConfPath = `integration/nginx/conf/`;
+const nginxIncludesPath = `integration/nginx/conf/includes/`;
+const videosPath = `integration/public/videos`;
+const screenshotsPath = `integration/public/screenshots`;
 const staticFileData = `root: public
 location_includes: include/*.conf
 `;
 const headersConfData = 'add_header "Access-Control-Allow-Origin" "*";';
 const paths = [integrationFolder, publicDirectoryPath, nginxPath, nginxConfPath, nginxIncludesPath, videosPath, screenshotsPath];
 const manifestHeader = `---
-applications:
-`;
+applications:`;
 let manifestAppInfo = `
 - name: ${APP_NAME}cypress-reports
     random-route: false
@@ -105,9 +108,8 @@ const storeManifest = (manifestInfo) => {
     try {
         if(!fs.existsSync('manifest.yml')) {
             try {
-                manifestAppInfo = `${manifestHeader}
-                    ${manifestAppInfo}`;
-                fs.writeFileSync('manifest.yml', manifestInfo);
+                manifestAppInfo = `${manifestHeader}${manifestAppInfo}`;
+                fs.writeFileSync('manifest.yml', manifestAppInfo);
                 console.log('__ File Created __')
             } catch (err) {
                 console.error(err);
@@ -133,7 +135,7 @@ const storeManifest = (manifestInfo) => {
 
 /** set up paths */
 paths.forEach((path) => {
-    createDirectoryStructure(paht);
+    createDirectoryStructure(path);
 });
 
 /** create files and store data */
