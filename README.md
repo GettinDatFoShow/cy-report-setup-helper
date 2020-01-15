@@ -18,3 +18,5 @@ Then add the script `test:create-reports` to your build script or test run by ca
 
 # Extra Info
 by default the `test:create-reports` script assumes that a `start` script exists and is set up for a live developement server which will run the UI code. This can be changed to fit your needs by altering the `test:cy` script in your package.json.
+
+cy-report-setup-helper assumes you already have cypress added to your project and thus already have a cypress.json file. If a cypress.json file is not present, the script will fail.
