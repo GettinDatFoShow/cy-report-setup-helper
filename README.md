@@ -7,7 +7,7 @@ Setup script that helps users of Cypress.io && Cloud Foundry Automatically set u
 
 Then in the command line run..
 
-`node node_modules/cy-report-setup-helper/index.js && npm i`
+`npx cy-helper-generate && npm i`
 
 This should...
 - add the needed devDependencies npm packages for mocha, mochawesome, mochawesome-report-generator, npm-run-all, and directory-tree.
