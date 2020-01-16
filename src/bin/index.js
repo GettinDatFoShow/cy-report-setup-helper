@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 const fs = require('fs');
-
-const CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
+const  CYPRESS_FILE =  "{}";
+try {
+    CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
+} catch (e) {
+    console.error('No Cypress.json File.. Generating new');
+} 
 const PROJECT_PACKAGE_FILE = fs.readFileSync('package.json', 'utf-8');
 const CY_REPORT_TREE_GENERATOR = fs.readFileSync('node_modules/cy-report-setup-helper/src/lib/cy-report-tree-generator.js', 'utf-8');
 
@@ -30,12 +34,12 @@ addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cle
 addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node integration/d-tree-listing.js');
 
 /** set up devDependancies */
-addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^5.2.0');
-addProjectProperty(projectSettings, 'devDependencies', 'mochawesome', '^4.0.1');
+addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^7.0.0');
+addProjectProperty(projectSettings, 'devDependencies', 'mochawesome', '^4.1.0');
 addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-merge', '^2.0.1');
-addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-report-generator', '^4.0.1');
+addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-report-generator', '^4.1.0');
 addProjectProperty(projectSettings, 'devDependencies', 'npm-run-all', '^4.1.5');
-addProjectProperty(projectSettings, 'devDependencies', 'directory-tree', '^2.2.3');
+addProjectProperty(projectSettings, 'devDependencies', 'directory-tree', '^2.2.4');
 
 /** add cypress settings */
 addProjectProperty(cypressSettings, 'reporterOptions', 'reportDir', 'integration/reports/mocha');
@@ -63,7 +67,7 @@ const paths = [integrationFolder, publicDirectoryPath, nginxPath, nginxConfPath,
 const manifestHeader = `---
 applications:`;
 let manifestAppInfo = `
-- name: ${APP_NAME}cypress-reports
+- name: ${APP_NAME}-cy-reports
     random-route: false
     memory: 1G
     instances: 1
@@ -119,12 +123,12 @@ const storeManifest = (manifestInfo) => {
         } else {
             let currentManifest = fs.readFileSync('manifest.yml', 'utf-8');
             try {
-                if(!currentManifest.includes(`${APP_NAME}cypress-reports`)) {
+                if(!currentManifest.includes(`${APP_NAME}-cy-reports`)) {
                     manifestAppInfo = `${currentManifest}
                     ${manifestAppInfo}`;
                     fs.writeFileSync(`manifest.yml`, manifestAppInfo);
                 } else {
-                    console.log(`manifest.yml already exists and includes ${APP_NAME}cypress-reports...`);
+                    console.log(`manifest.yml already exists and includes ${APP_NAME}-cy-reports...`);
                 }
             } catch(err) {
                 console.error(err);
