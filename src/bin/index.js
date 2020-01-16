@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
 const PROJECT_PACKAGE_FILE = fs.readFileSync('package.json', 'utf-8');
-const CY_REPORT_TREE_GENERATOR = fs.readFileSync('node_modules/cy-report-setup-helper/cy-report-tree-generator.js', 'utf-8');
+const CY_REPORT_TREE_GENERATOR = fs.readFileSync('node_modules/cy-report-setup-helper/src/lib/cy-report-tree-generator.js', 'utf-8');
 
 let cypressSettings = JSON.parse(CYPRESS_FILE);
 let projectSettings = JSON.parse(PROJECT_PACKAGE_FILE);
