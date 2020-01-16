@@ -60,7 +60,7 @@ const nginxIncludesPath = `integration/nginx/conf/includes/`;
 const videosPath = `integration/public/videos`;
 const screenshotsPath = `integration/public/screenshots`;
 const staticFileData = `root: public
-location_includes: include/*.conf
+location_include: includes/*.conf
 `;
 const headersConfData = 'add_header "Access-Control-Allow-Origin" "*";';
 const paths = [integrationFolder, publicDirectoryPath, nginxPath, nginxConfPath, nginxIncludesPath, videosPath, screenshotsPath];
