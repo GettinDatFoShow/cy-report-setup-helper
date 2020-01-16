@@ -31,7 +31,7 @@ addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge in
 addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start cy:run');
 addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
 addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cleanup:all test:cy merge_reports generate_html_report create-tree');
-addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node integration/d-tree-listing.js');
+addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node integration/cy-report-tree-generator.js');
 
 /** set up devDependancies */
 addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^7.0.0');
