@@ -1,6 +1,6 @@
 # What is this?
 
-Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished reports are public for them to go back and view statically. 
+Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished Mochawesome reports are public for them to go back and view statically. 
 
 # Installation
 `npm i cy-report-setup-helper --save-dev`
