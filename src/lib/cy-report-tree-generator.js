@@ -11,7 +11,7 @@ const data = JSON.stringify(tree);
 /** function to create file/store the data */
 const storeData = (data, path) => {
     try {
-        if (!fs.existsSync(paht)) {
+        if (!fs.existsSync(path)) {
             fs.mkdirSync(path);
         }
     } catch (err) {
