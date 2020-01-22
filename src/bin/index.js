@@ -68,10 +68,10 @@ const manifestHeader = `---
 applications:`;
 let manifestAppInfo = `
 - name: ${APP_NAME}-cy-reports
-    random-route: false
-    memory: 1G
-    instances: 1
-    path: ./integration
+  random-route: false
+  memory: 1G
+  instances: 1
+  path: ./integration
 `;
 const createDirectoryStructure = (path) => {
     console.log('** creating path for %s **', path);
