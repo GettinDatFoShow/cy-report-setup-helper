@@ -1,6 +1,6 @@
 # What is this?
 
-etup script that helps users of Cypress.io automatically set up their folder/project structure so that their tests generate a finished Mochawesome report. If the cloud foundry flag is set to true, then the appropiate files will be public for them to go back and view teir reports statically via an integration folder. 
+cy-report-setup-helper is a setup script that helps users of Cypress.io automatically set up their folder/project structure so that their tests generate a finished Mochawesome report. If the cloud foundry flag is set to true, then the appropiate files will be public for them to go back and view teir reports statically via an integration folder. 
 
 # Installation
 `npm i cy-report-setup-helper --save-dev`
