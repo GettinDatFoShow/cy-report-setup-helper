@@ -1,6 +1,56 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const  CYPRESS_FILE =  "{}";
+const flags = [
+    '--output-dir=some/new/dir (for the output of the integration folder, top level project folder by default)',
+    '--cloud-foundry=true/false (set to true if useing Cloud Foundry)',
+    'help, -h',
+    'version, -v'
+]
+
+const checkFlags = (argv) => {
+    if (argv.v || argv.version) {
+        const version = JSON.parse(fs.readFileSync('package.json', 'utf-8')).version;
+        console.log('version - ' + version);
+    } else if (argv.h || argv.help) {
+        console.log('Thanks For using Cy-report-setup-helper!');
+        console.log('');
+        console.log('Information ----- ')
+        console.log('');
+        console.log('   Built to help users of Cypres.io automatically get all the packages they need for an automatic Mochawesome after test report.');
+        console.log('   If the Cloud Foundry flag is set to true, cy-report-setup-helper will help set the integration folder to public and add the proper manifest file.');
+        console.log('       Developed by Robert Morris, please feel free to help colaborate.')
+        console.log('');
+        console.log('Flags -----')
+        console.log('');
+        flags.forEach(flag => {
+            console.log('   '+flag);
+        });
+        console.log('');
+    } 
+}
+
+const argv = require('yargs')
+    .command('*', 'default runner', (yargs) => {}, (argv) => {
+    checkFlags(argv);
+    }).argv;
+
+let outputDir = '';
+let isCloudFoundry = false;
+
+if (!!argv.outputDir) {
+    outputDir = argv.outputDir;
+    if (!outputDir.endsWith('/')) {
+        outputDir = outputDir + '/';
+    }
+    if (outputDir.startsWith('/')) {
+        outputDir = outputDir.substring(1);
+    }
+    console.log('output-dir = '+ outputDir);
+} else if (argv.cloudFoundry === 'true') {
+    isCloudFoundry = true;
+}
+
 try {
     CYPRESS_FILE = fs.readFileSync('cypress.json', 'utf-8');
 } catch (e) {
@@ -24,14 +74,14 @@ const addProjectProperty = (settingsFile, projectProperty, newProperty, instruct
 
 /** set up scripts */
 addProjectProperty(projectSettings, 'scripts', 'cleanup:all', 'run-p cleanup:reports cleanup:evidence' );
-addProjectProperty(projectSettings, 'scripts', 'cleanup:reports', 'rm -fr integration/public/report* && rm -fr integration/report*' );
-addProjectProperty(projectSettings, 'scripts', 'cleanup:evidence', 'rm -fr integration/public/videos* && rm -fr integration/public/screenshots*');
-addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=integration/reports/mocha > integration/public/report.json');
-addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge integration/public/report.json -f report -o integration/public/');
+addProjectProperty(projectSettings, 'scripts', 'cleanup:reports', 'rm -fr ' + outputDir + 'integration/public/report* && rm -fr ' + outputDir + 'integration/report*' );
+addProjectProperty(projectSettings, 'scripts', 'cleanup:evidence', 'rm -fr ' + outputDir + 'integration/public/videos* && rm -fr ' + outputDir + 'integration/public/screenshots*');
+addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=' + outputDir + '/integration/reports/mocha > ' + outputDir + 'integration/public/report.json');
+addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge ' + outputDir + 'integration/public/report.json -f report -o ' + outputDir + 'integration/public/');
 addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start cy:run');
 addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
 addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cleanup:all test:cy merge_reports generate_html_report create-tree');
-addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node integration/cy-report-tree-generator.js');
+addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node ' + outputDir + 'integration/cy-report-tree-generator.js');
 
 /** set up devDependancies */
 addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^7.0.0');
@@ -42,28 +92,33 @@ addProjectProperty(projectSettings, 'devDependencies', 'npm-run-all', '^4.1.5');
 addProjectProperty(projectSettings, 'devDependencies', 'directory-tree', '^2.2.4');
 
 /** add cypress settings */
-addProjectProperty(cypressSettings, 'reporterOptions', 'reportDir', 'integration/reports/mocha');
+addProjectProperty(cypressSettings, 'reporterOptions', 'reportDir', outputDir + 'integration/reports/mocha');
 addProjectProperty(cypressSettings, 'reporterOptions', 'quiet', true);
 addProjectProperty(cypressSettings, 'reporterOptions', 'html', false);
 addProjectProperty(cypressSettings, 'reporterOptions', 'overwrite', false);
 addProjectProperty(cypressSettings, 'reporterOptions', 'json', true);
-cypressSettings['videosFolder'] = 'integration/public/videos';
-cypressSettings['screenshotsFolder'] = 'integration/public/screenshots';
+cypressSettings['videosFolder'] = outputDir + 'integration/public/videos';
+cypressSettings['screenshotsFolder'] = outputDir + 'integration/public/screenshots';
 cypressSettings['videoCompression'] = false;
 cypressSettings['reporter'] = 'mochawesome';
+cypressSettings['browser'] = 'electron';
+cypressSettings['chromeWebSecurity'] = false;
 
-const integrationFolder = 'integration/';
-const publicDirectoryPath = `integration/public/`;
-const nginxPath = `integration/nginx/`;
-const nginxConfPath = `integration/nginx/conf/`;
-const nginxIncludesPath = `integration/nginx/conf/includes/`;
-const videosPath = `integration/public/videos`;
-const screenshotsPath = `integration/public/screenshots`;
+/** directory folder structures */
+const integrationFolder = outputDir + 'integration/';
+const publicDirectoryPath = outputDir + `integration/public/`;
+const nginxPath = outputDir + `integration/nginx/`;
+const nginxConfPath = outputDir + `integration/nginx/conf/`;
+const nginxIncludesPath = outputDir + `integration/nginx/conf/includes/`;
+const videosPath = outputDir + `integration/public/videos`;
+const screenshotsPath = outputDir + `integration/public/screenshots`;
+const paths = [outputDir, integrationFolder, publicDirectoryPath, nginxPath, nginxConfPath, nginxIncludesPath, videosPath, screenshotsPath];
+
+/** static file data for cloud foundry setup */
 const staticFileData = `root: public
 location_include: includes/*.conf
 `;
 const headersConfData = 'add_header "Access-Control-Allow-Origin" "*";';
-const paths = [integrationFolder, publicDirectoryPath, nginxPath, nginxConfPath, nginxIncludesPath, videosPath, screenshotsPath];
 const manifestHeader = `---
 applications:`;
 let manifestAppInfo = `
@@ -71,8 +126,10 @@ let manifestAppInfo = `
   random-route: false
   memory: 1G
   instances: 1
-  path: ./integration
+  path: ./${outputDir}integration
 `;
+
+/** function for creating directory folders */
 const createDirectoryStructure = (path) => {
     console.log('** creating path for %s **', path);
     try {
@@ -86,6 +143,7 @@ const createDirectoryStructure = (path) => {
     }
 };
 
+/** function for storying files */
 const storeData = (data, fileName, path) => {
     console.log('** creating file for %s in %s **', fileName, path);
     try {
@@ -109,6 +167,7 @@ const storeData = (data, fileName, path) => {
     }
 ;}
 
+/** function to store cloud foundry manifest file */
 const storeManifest = (manifestInfo) => {
     console.log('** creating file for manifest.yml **');
     try {
@@ -148,8 +207,17 @@ paths.forEach((path) => {
 storeData(JSON.stringify(projectSettings), 'package.json', '');
 storeData(JSON.stringify(cypressSettings), 'cypress.json', '');
 storeData(CY_REPORT_TREE_GENERATOR, 'cy-report-tree-generator.js', integrationFolder);
-storeData(staticFileData, 'Staticfile', integrationFolder);
-storeData(headersConfData, 'headers.conf', nginxIncludesPath);
-storeManifest(manifestAppInfo);
+
+/** checking cloud flag  running cloud set up for files if needed */
+if (isCloudFoundry) {
+    console.log('Using Cloud Foundry...');
+    console.log('setting up cloud files...');
+    storeData(staticFileData, 'Staticfile', integrationFolder);
+    storeData(headersConfData, 'headers.conf', nginxIncludesPath);
+    storeManifest(manifestAppInfo);
+}
+
+console.log('Project Setup complete! please run npm install now to install the added mochawesome report dependencies.')
+
 
 

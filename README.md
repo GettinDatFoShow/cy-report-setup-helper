@@ -1,6 +1,6 @@
 # What is this?
 
-Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished Mochawesome reports are public for them to go back and view statically. 
+etup script that helps users of Cypress.io automatically set up their folder/project structure so that their tests generate a finished Mochawesome report. If the cloud foundry flag is set to true, then the appropiate files will be public for them to go back and view teir reports statically via an integration folder. 
 
 # Installation
 `npm i cy-report-setup-helper --save-dev`
@@ -18,5 +18,4 @@ Then add the script `test:create-reports` to your build script or test run by ca
 
 # Extra Info
 by default the `test:create-reports` script assumes that a `start` script exists and is set up for a live developement server which will run the UI code. This can be changed to fit your needs by altering the `test:cy` script in your package.json.
-
-cy-report-setup-helper assumes you already have cypress added to your project and thus already have a cypress.json file. If a cypress.json file is not present, the script will fail.
+.

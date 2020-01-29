@@ -1,7 +1,7 @@
 {
   "name": "cy-report-setup-helper",
-  "version": "1.1.5",
-  "description": "Setup script that helps users of Cypress.io && Cloud Foundry Automatically set up their folder/project structure so that their finished Mochawesome reports are public for them to go back and view statically. ",
+  "version": "1.2.0",
+  "description": "Setup script that helps users of Cypress.io automatically set up their folder/project structure so that their tests generate a finished Mochawesome report. If the cloud foundry flag is set to true, then the appropiate files will be public for them to go back and view teir reports statically via an integration folder. ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,11 +17,14 @@
   "author": "Robert Morris",
   "license": "ISC",
   "bin": {
-    "cy-helper-generate" : "./src/bin/index.js",
+    "cy-helper-generate": "./src/bin/index.js",
     "cy-report-tree-generator": "./src/lib/cy-report-tree-generator.js"
   },
   "bugs": {
     "url": "https://github.com/GettinDatFoShow/cy-report-setup-helper/issues"
   },
-  "homepage": "https://github.com/GettinDatFoShow/cy-report-setup-helper#readme"
+  "homepage": "https://github.com/GettinDatFoShow/cy-report-setup-helper#readme",
+  "dependencies": {
+    "yargs": "^15.1.0"
+  }
 }
