@@ -47,7 +47,8 @@ if (!!argv.outputDir) {
         outputDir = outputDir.substring(1);
     }
     console.log('output-dir = '+ outputDir);
-} else if (argv.cloudFoundry === 'true') {
+} 
+if (argv.cloudFoundry === 'true') {
     isCloudFoundry = true;
 }
 
@@ -81,7 +82,7 @@ addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge ' 
 addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start cy:run');
 addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
 addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cleanup:all test:cy merge_reports generate_html_report create-tree');
-addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node ' + outputDir + 'integration/cy-report-tree-generator.js');
+addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node ' + outputDir + 'integration/cy-report-tree-generator.js --path=' + outputDir);
 
 /** set up devDependancies */
 addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^7.0.0');
@@ -206,6 +207,8 @@ paths.forEach((path) => {
 /** create files and store data */
 storeData(JSON.stringify(projectSettings), 'package.json', '');
 storeData(JSON.stringify(cypressSettings), 'cypress.json', '');
+let cyTreeGenerator = JSON.stringify(CY_REPORT_TREE_GENERATOR);
+cyTreeGenerator.
 storeData(CY_REPORT_TREE_GENERATOR, 'cy-report-tree-generator.js', integrationFolder);
 
 /** checking cloud flag  running cloud set up for files if needed */

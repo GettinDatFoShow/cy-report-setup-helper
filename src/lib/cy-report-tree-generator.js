@@ -1,6 +1,9 @@
 const dirTree = require('directory-tree');
 const fs = require('fs');
-const path = 'integration/public';
+const argv = require('yargs')
+    .command('*', 'default runner', (yargs) => {}, (argv) => {
+    }).argv;
+const path = argv.path+'integration/public';
 console.log('** Path : %s ***', path);
 
 const tree = dirTree(path);
