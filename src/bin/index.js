@@ -47,7 +47,8 @@ if (!!argv.outputDir) {
         outputDir = outputDir.substring(1);
     }
     console.log('output-dir = '+ outputDir);
-} else if (argv.cloudFoundry === 'true') {
+} 
+if (argv.cloudFoundry === 'true') {
     isCloudFoundry = true;
 }
 
