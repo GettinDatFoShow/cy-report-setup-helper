@@ -207,8 +207,6 @@ paths.forEach((path) => {
 /** create files and store data */
 storeData(JSON.stringify(projectSettings), 'package.json', '');
 storeData(JSON.stringify(cypressSettings), 'cypress.json', '');
-let cyTreeGenerator = JSON.stringify(CY_REPORT_TREE_GENERATOR);
-cyTreeGenerator.
 storeData(CY_REPORT_TREE_GENERATOR, 'cy-report-tree-generator.js', integrationFolder);
 
 /** checking cloud flag  running cloud set up for files if needed */
