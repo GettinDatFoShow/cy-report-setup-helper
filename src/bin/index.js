@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const beautify = require('json-beautify');
 const  CYPRESS_FILE =  "{}";
 const flags = [
     '--output-dir=some/new/dir (for the output of the integration folder, top level project folder by default)',
@@ -205,10 +206,8 @@ paths.forEach((path) => {
 });
 
 /** create files and store data */
-storeData(JSON.stringify(projectSettings), 'package.json', '');
-storeData(JSON.stringify(cypressSettings), 'cypress.json', '');
-let cyTreeGenerator = JSON.stringify(CY_REPORT_TREE_GENERATOR);
-cyTreeGenerator.
+storeData(beautify(projectSettings, null, 2, 100), 'package.json', '');
+storeData(beautify(cypressSettings, null, 2, 100), 'cypress.json', '');
 storeData(CY_REPORT_TREE_GENERATOR, 'cy-report-tree-generator.js', integrationFolder);
 
 /** checking cloud flag  running cloud set up for files if needed */

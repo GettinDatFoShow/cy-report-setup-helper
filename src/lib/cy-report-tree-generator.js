@@ -1,5 +1,6 @@
 const dirTree = require('directory-tree');
 const fs = require('fs');
+const beautify = require('json-beautify');
 const argv = require('yargs')
     .command('*', 'default runner', (yargs) => {}, (argv) => {
     }).argv;
@@ -9,7 +10,7 @@ console.log('** Path : %s ***', path);
 const tree = dirTree(path);
 console.log('- Directory Tree Found..');
 console.dir(tree, {depth: 20});
-const data = JSON.stringify(tree);
+const data = beautify(tree, null, 2, 100);
 
 /** function to create file/store the data */
 const storeData = (data, path) => {
