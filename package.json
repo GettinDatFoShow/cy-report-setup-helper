@@ -1,6 +1,6 @@
 {
   "name": "cy-report-setup-helper",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Setup script that helps users of Cypress.io automatically set up their folder/project structure so that their tests generate a finished Mochawesome report. If the cloud foundry flag is set to true, then the appropiate files will be public for them to go back and view their reports statically via an integration folder. ",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/GettinDatFoShow/cy-report-setup-helper#readme",
   "dependencies": {
+    "json-beautify": "^1.1.1",
     "yargs": "^15.1.0"
   }
 }
