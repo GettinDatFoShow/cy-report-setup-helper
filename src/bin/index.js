@@ -80,8 +80,9 @@ addProjectProperty(projectSettings, 'scripts', 'cleanup:reports', 'rm -fr ' + ou
 addProjectProperty(projectSettings, 'scripts', 'cleanup:evidence', 'rm -fr ' + outputDir + 'integration/public/videos* && rm -fr ' + outputDir + 'integration/public/screenshots*');
 addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=' + outputDir + '/integration/reports/mocha > ' + outputDir + 'integration/public/report.json');
 addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge ' + outputDir + 'integration/public/report.json -f report -o ' + outputDir + 'integration/public/');
-addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start cy:run');
+addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start test-no-exit');
 addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
+addProjectProperty(projectSettings, 'scripts', 'test-no-exit', 'npm run cy:run --force');
 addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cleanup:all test:cy merge_reports generate_html_report create-tree');
 addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node ' + outputDir + 'integration/cy-report-tree-generator.js --path=' + outputDir);
 
@@ -92,6 +93,8 @@ addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-merge', '^2.
 addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-report-generator', '^4.1.0');
 addProjectProperty(projectSettings, 'devDependencies', 'npm-run-all', '^4.1.5');
 addProjectProperty(projectSettings, 'devDependencies', 'directory-tree', '^2.2.4');
+addProjectProperty(projectSettings, 'devDependencies', 'yargs', '^15.1.0');
+addProjectProperty(projectSettings, 'devDependencies', 'json-beautify', '^1.1.1');
 
 /** add cypress settings */
 addProjectProperty(cypressSettings, 'reporterOptions', 'reportDir', outputDir + 'integration/reports/mocha');
