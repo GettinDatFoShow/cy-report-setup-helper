@@ -35,7 +35,9 @@ by default the `test:create-reports` script assumes that a `start` script exists
     "mochawesome-merge": "^2.0.1",
     "mochawesome-report-generator": "^4.1.0",
     "npm-run-all": "^4.1.5",
-    "directory-tree": "^2.2.4"
+    "directory-tree": "^2.2.4",
+    "yargs": "^15.1.0",
+    "json-beautify": "^1.1.1"
 }
 ```
 # scripts added to your package.json
@@ -46,8 +48,9 @@ by default the `test:create-reports` script assumes that a `start` script exists
     "cleanup:evidence": "rm -fr <output-dir>/integration/public/videos* && rm -fr <output-dir>/integration/public/screenshots*",
     "merge_reports": "mochawesome-merge --reportDir=<output-dir>//integration/reports/mocha > <output-dir>/integration/public/report.json",
     "generate_html_report": "marge <output-dir>/integration/public/report.json -f report -o <output-dir>/integration/public/",
-    "test:cy": "run-p --race --silent start cy:run",
+    "test:cy": "run-p --race --silent start test-no-exit",
     "cy:run": "cypress run",
+    "test-no-exit": "npm run cy:run --force" 
     "test:create-reports": "run-s cleanup:all test:cy merge_reports generate_html_report create-tree",
     "create-tree": "node <output-dir>/integration/cy-report-tree-generator.js --path=<output-dir>/"
 }
