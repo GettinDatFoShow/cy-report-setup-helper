@@ -78,7 +78,7 @@ const addProjectProperty = (settingsFile, projectProperty, newProperty, instruct
 addProjectProperty(projectSettings, 'scripts', 'cleanup:all', 'run-p cleanup:reports cleanup:evidence' );
 addProjectProperty(projectSettings, 'scripts', 'cleanup:reports', 'rm -fr ' + outputDir + 'integration/public/report* && rm -fr ' + outputDir + 'integration/report*' );
 addProjectProperty(projectSettings, 'scripts', 'cleanup:evidence', 'rm -fr ' + outputDir + 'integration/public/videos* && rm -fr ' + outputDir + 'integration/public/screenshots*');
-addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=' + outputDir + '/integration/reports/mocha > ' + outputDir + 'integration/public/report.json');
+addProjectProperty(projectSettings, 'scripts', 'merge_reports', 'mochawesome-merge --reportDir=' + outputDir + 'integration/reports/mocha > ' + outputDir + 'integration/public/report.json');
 addProjectProperty(projectSettings, 'scripts', 'generate_html_report', 'marge ' + outputDir + 'integration/public/report.json -f report -o ' + outputDir + 'integration/public/');
 addProjectProperty(projectSettings, 'scripts', 'test:cy', 'run-p --race --silent start test-no-exit');
 addProjectProperty(projectSettings, 'scripts', 'cy:run', 'cypress run');
