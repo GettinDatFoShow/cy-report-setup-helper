@@ -30,6 +30,7 @@ by default the `test:create-reports` script assumes that a `start` script exists
 # devDependencies added to your package.json
 ```
 {
+    "cypress":"^3.8.3"
     "mocha": "^5.2.0",
     "mochawesome": "^4.1.0",
     "mochawesome-merge": "^2.0.1",
@@ -46,7 +47,7 @@ by default the `test:create-reports` script assumes that a `start` script exists
     "cleanup:all": "run-p cleanup:reports cleanup:evidence",
     "cleanup:reports": "rm -fr <output-dir>/integration/public/report* && rm -fr <output-dir>/integration/report*",
     "cleanup:evidence": "rm -fr <output-dir>/integration/public/videos* && rm -fr <output-dir>/integration/public/screenshots*",
-    "merge_reports": "mochawesome-merge --reportDir=<output-dir>//integration/reports/mocha > <output-dir>/integration/public/report.json",
+    "merge_reports": "mochawesome-merge --reportDir=<output-dir>/integration/reports/mocha > <output-dir>/integration/public/report.json",
     "generate_html_report": "marge <output-dir>/integration/public/report.json -f report -o <output-dir>/integration/public/",
     "test:cy": "run-p --race --silent start test-no-exit",
     "cy:run": "cypress run",
