@@ -87,7 +87,7 @@ addProjectProperty(projectSettings, 'scripts', 'test:create-reports', 'run-s cle
 addProjectProperty(projectSettings, 'scripts', 'create-tree', 'node ' + outputDir + 'integration/cy-report-tree-generator.js --path=' + outputDir);
 
 /** set up devDependancies */
-addProjectProperty(projectSettings, 'devDependencies', 'cypress', '^3.8.3');
+addProjectProperty(projectSettings, 'devDependencies', 'cypress', '^4.0.1');
 addProjectProperty(projectSettings, 'devDependencies', 'mocha', '^5.2.0');
 addProjectProperty(projectSettings, 'devDependencies', 'mochawesome', '^4.1.0');
 addProjectProperty(projectSettings, 'devDependencies', 'mochawesome-merge', '^2.0.1');
